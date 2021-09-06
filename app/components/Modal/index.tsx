@@ -7,6 +7,7 @@ import DateFnsUtils from '@date-io/date-fns';
 import { CustomerCreate } from 'containers/CustomerPage/saga';
 import { useDispatch } from 'react-redux';
 import { customerRequest } from 'containers/CustomerPage/actions';
+import Swal from 'sweetalert2';
 
 import {
   MuiPickersUtilsProvider,
@@ -128,11 +129,16 @@ export default function SimpleModal(props) {
     event.preventDefault();
     if(!mobileErr){
         const res = await CustomerCreate(customer);
-        handleClose();
+        if(res.data.data){
+            handleClose();
+            Swal.fire({
+                icon: 'success',
+                title: 'Yeahhhhh.....',
+                text: 'Add customer successfully',
+            })
+        }
     }    
-    
-    // userLogInRequest(user);
-}
+  }
 
   const handleClose = () => {
     handleModal();
